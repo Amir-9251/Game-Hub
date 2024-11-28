@@ -22,15 +22,21 @@ interface FetchGameResponse {
 const useGame = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [errors, setErrors] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
 
+    setLoading(true)
     apiClint
       .get<FetchGameResponse>("/games", { signal: controller.signal })
-      .then((res) => setGames(res.data.results))
+      .then((res) => {
+        setGames(res.data.results) 
+        setLoading(false)
+      })
       .catch((err) => {
-        if (err instanceof CanceledError) return; // Ignore cancellations
+        if (err instanceof CanceledError) return; 
+        setLoading(false)
         setErrors(err.message);
       });
 
@@ -39,7 +45,7 @@ const useGame = () => {
     };
   }, []);
 
-  return { games, errors };
+  return { games, errors,isLoading };
 };
 
 export default useGame;
