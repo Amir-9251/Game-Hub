@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import apiClint from "../services/api-clint";
 import { SimpleGrid, Text } from "@chakra-ui/react";
-import useGame from "../hooks/useGame";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
+import useGame from "../hooks/useGame";
 
 const GameGrid = () => {
-  const { games, errors, isLoading } = useGame();
+  const {  data, errors, isLoading } = useGame();
   const Skeleton = [1, 2, 3, 4, 5, 6];
   return (
     <>
@@ -19,14 +17,13 @@ const GameGrid = () => {
       >
         {isLoading &&
           Skeleton.map((Skeleton) => (
-            <GameCardContainer>
+            <GameCardContainer key={Skeleton}>
               <GameCardSkeleton key={Skeleton} />
             </GameCardContainer>
           ))}
-        {games.map((game) => (
-          <GameCardContainer>
-            {" "}
-            <GameCard key={game.id} game={game} />
+        {data.map((data) => (
+          <GameCardContainer key={data.id}>
+            <GameCard key={data.id} game={data} />
           </GameCardContainer>
         ))}
       </SimpleGrid>
