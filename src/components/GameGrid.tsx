@@ -6,14 +6,14 @@ import useGame from "../hooks/useGame";
 
 const GameGrid = () => {
   const {  data, errors, isLoading } = useGame();
-  const Skeleton = [1, 2, 3, 4, 5, 6];
+  const Skeleton = [1, 2, 3, 4, 5, 6,7,8,9,10];
   return (
     <>
       {errors && <Text>{errors}</Text>}
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xl: 5 }}
         padding={"10px"}
-        spacing={10}
+        spacing={3}
       >
         {isLoading &&
           Skeleton.map((Skeleton) => (
@@ -21,9 +21,9 @@ const GameGrid = () => {
               <GameCardSkeleton key={Skeleton} />
             </GameCardContainer>
           ))}
-        {data.map((data) => (
-          <GameCardContainer key={data.id}>
-            <GameCard key={data.id} game={data} />
+        {data.map((games) => (
+          <GameCardContainer key={games.id}>
+            <GameCard key={games.id} game={games} />
           </GameCardContainer>
         ))}
       </SimpleGrid>

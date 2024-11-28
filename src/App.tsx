@@ -11,16 +11,17 @@ function App() {
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`,
       }}
+     
     >
-      <GridItem area={"nav"} width={"100vw"}>
+      <GridItem area="nav" >
         <Navbar />
       </GridItem>
       <Show above="lg">
-        <GridItem area={"aside"}>
+        <GridItem area="aside" paddingX={5} width={'200px'}>
           <GenresList />
         </GridItem>
       </Show>
-      <GridItem area={"main"}>
+      <GridItem area="main">
         <GameGrid />
       </GridItem>
     </Grid>
