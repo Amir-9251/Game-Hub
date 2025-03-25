@@ -14,11 +14,10 @@ interface props {
   selectedGenres: Genres | null;
 }
 const GenresList = ({ OnSelectGenres, selectedGenres }: props) => {
-  const { data, isLoading, errors } = useGenres();
+  const { data, isLoading } = useGenres();
   return (
     <>
       {isLoading && <Spinner />}
-      {errors && null}
       <Heading fontSize='2xl' marginBottom={5}>Genres</Heading>
       <List>
         {data?.results.map((genres) => (

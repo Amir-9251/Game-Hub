@@ -8,15 +8,15 @@ interface props {
   plateForm: Platform | null;
 }
 const PalteformSelector = ({ onSelectedPlatform, plateForm }: props) => {
-  let { data, errors } = usePlateform();
-  if (errors) return null;
+  let { data } = usePlateform();
+
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
         {plateForm?.name || "PlatForm"}
       </MenuButton>
       <MenuList>
-        {data.map((platform) => (
+        {data?.results.map((platform) => (
           <MenuItem
             onClick={() => onSelectedPlatform(platform)}
             key={platform.id}

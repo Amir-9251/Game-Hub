@@ -12,8 +12,7 @@ const useGenres = () => useQuery({
     queryKey: ["genres"],
     queryFn: () => apiClint
         .get<FetchResponse<Genres>>('/genres')
-        .then((res) => res.data),
+        .then((res) => res.data).catch(err => { throw err }),
     staleTime: 1000 * 60 * 60 * 24,
-    initialData: { count: genres.length, results: genres },
 })
 export default useGenres;
