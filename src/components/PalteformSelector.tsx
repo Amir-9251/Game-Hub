@@ -8,8 +8,8 @@ interface props {
   plateForm: Platform | null;
 }
 const PalteformSelector = ({ onSelectedPlatform, plateForm }: props) => {
-  let { data } = usePlateform();
-
+  let { data, error } = usePlateform();
+  if (error?.message) return null;
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
