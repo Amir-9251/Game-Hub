@@ -1,11 +1,8 @@
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
-import useData from "./useData";
-import { Genres } from "./useGenres";
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
+import APIClint, { FetchResponse } from "../services/api-clint";
+import { Platform } from "./usePlatforms";
+
 export interface Game {
   id: number;
   name: string;
@@ -14,19 +11,26 @@ export interface Game {
   metacritic: number;
   rating_top: number;
 }
+const apiClint = new APIClint<Game>('/games');
 
 const useGame = (gameQuery: GameQuery) =>
-  useData<Game>(
-    "/games",
-    {
+  useInfiniteQuery<FetchResponse<Game>, Error>({
+    queryKey: ["games", gameQuery],
+    queryFn: ({ pageParam }) => apiClint.getAll({
       params: {
-        genres: gameQuery.genre?.id,
-        platforms: gameQuery.platform?.id,
+        genres: gameQuery.genreId,
+        platforms: gameQuery.selectedPlatformId,
         ordering: gameQuery.sortOrder,
         search: gameQuery.searchText,
+        page: pageParam,
       },
+    }),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.next ? allPages.length + 1 : undefined
     },
-    [gameQuery]
-  );
 
+    staleTime: 1000 * 60 * 60 * 24,
+
+  })
+console.log()
 export default useGame;

@@ -6,23 +6,22 @@ import {
   List,
   ListItem,
   Spinner,
-  Text,
 } from "@chakra-ui/react";
 import useGenres, { Genres } from "../hooks/useGenres";
 import getCroppedImagesUrl from "../services/image-url";
 interface props {
   OnSelectGenres: (genre: Genres) => void;
-  selectedGenres: Genres | null;
+  selectedGenresId?: number;
 }
-const GenresList = ({ OnSelectGenres, selectedGenres }: props) => {
-  const { data, isLoading, errors } = useGenres();
+const GenresList = ({ OnSelectGenres, selectedGenresId }: props) => {
+  const { data, error, isLoading } = useGenres();
+  if (error?.message) return null;
   return (
     <>
       {isLoading && <Spinner />}
-      {errors && null}
       <Heading fontSize='2xl' marginBottom={5}>Genres</Heading>
       <List>
-        {data.map((genres) => (
+        {data?.results.map((genres) => (
           <ListItem key={genres.id} paddingY={"5px"} textOverflow={"ellipsis"}>
             <HStack>
               <Image
@@ -34,9 +33,9 @@ const GenresList = ({ OnSelectGenres, selectedGenres }: props) => {
               <Button
                 whiteSpace='normal'
                 textAlign='left'
-                
+
                 fontWeight={
-                  genres.id === selectedGenres?.id ? "bold" : "normal"
+                  genres.id === selectedGenresId ? "bold" : "normal"
                 }
                 onClick={() => OnSelectGenres(genres)}
                 fontSize="lg"
