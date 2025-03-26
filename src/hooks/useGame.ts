@@ -1,8 +1,7 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
-import { FetchResponse } from "../services/api-clint";
+import APIClint, { FetchResponse } from "../services/api-clint";
 import { Platform } from "./usePlateform";
-import APIClint from "../services/api-clint";
 
 export interface Game {
   id: number;

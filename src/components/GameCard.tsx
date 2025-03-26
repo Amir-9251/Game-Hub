@@ -1,4 +1,4 @@
-import { Card, CardBody, Heading, HStack, Image } from "@chakra-ui/react";
+import { Card, CardBody, Heading, HStack, Image, Skeleton } from "@chakra-ui/react";
 import { Game } from "../hooks/useGame";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
@@ -11,7 +11,10 @@ interface props {
 const GameCard = ({ game }: props) => {
   return (
     <Card height={"100%"}>
-      <Image src={getCroppedImagesUrl(game.background_image)} />
+      {game.background_image ?
+        <Image src={getCroppedImagesUrl(game.background_image)} /> :
+        <Skeleton height={'40'} />
+      }
       <CardBody>
         <HStack justifyContent={"space-between"} marginBottom={3}>
           <PlatformIconList
