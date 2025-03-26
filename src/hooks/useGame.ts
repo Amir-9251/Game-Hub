@@ -18,8 +18,8 @@ const useGame = (gameQuery: GameQuery) =>
     queryKey: ["games", gameQuery],
     queryFn: ({ pageParam }) => apiClint.getAll({
       params: {
-        genres: gameQuery.genre?.id,
-        parent_platforms: gameQuery.platform?.id,
+        genres: gameQuery.genreId,
+        platforms: gameQuery.selectedPlatformId,
         ordering: gameQuery.sortOrder,
         search: gameQuery.searchText,
         page: pageParam,
